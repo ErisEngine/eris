@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Account, deposit, payment or withdrawal help
+    url: https://erislabs.org/support
+    about: Open a private ticket in the ERIS Support Center. Never post account or wallet details in a public issue.
+  - name: Report a security vulnerability
+    url: https://github.com/ErisEngine/eris/security/advisories/new
+    about: Report privately. Please do not open a public issue.

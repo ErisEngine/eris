@@ -1,0 +1,45 @@
+name: examples
+
+# Checks that every example in examples/ is valid: shell syntax, Python compilation, a TypeScript type check,
+# and that every relative link in the Markdown resolves. Makes no network calls to ERIS and needs no secrets.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Shell syntax
+        run: |
+          for f in examples/curl/*.sh; do bash -n "$f"; done
+          shellcheck examples/curl/*.sh
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Python
+        run: |
+          pip install -r examples/python/requirements.txt
+          python -m py_compile examples/python/*.py
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: TypeScript
+        working-directory: examples/typescript
+        run: |
+          npm install --no-audit --no-fund
+          npm run check
+
+      - name: Relative links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --offline --no-progress --include-fragments './**/*.md'
+          fail: true

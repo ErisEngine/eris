@@ -1,0 +1,19 @@
+{
+  "name": "eris-examples",
+  "private": true,
+  "type": "module",
+  "description": "ERIS client examples with the official OpenAI SDK",
+  "engines": { "node": ">=22.6" },
+  "scripts": {
+    "chat": "node --experimental-strip-types chat.ts",
+    "stream": "node --experimental-strip-types stream.ts",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "openai": "^4.77.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  }
+}

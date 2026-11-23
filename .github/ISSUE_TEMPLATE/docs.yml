@@ -1,0 +1,19 @@
+name: Documentation or example
+description: Something in docs/ or examples/ is wrong, unclear or out of date.
+labels: [docs]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: The file and section, or the example.
+      placeholder: docs/billing.md, Holds and charges
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What is wrong
+      description: What the documentation says, and what you observed instead. Remove any API key, password or wallet detail from responses you paste.
+    validations:
+      required: true
