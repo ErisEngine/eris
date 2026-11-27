@@ -12,8 +12,8 @@
 </p>
 
 <p align="center">
-  <b>ERIS is an exchange for AI inference.</b><br>
-  Sellers list OpenAI-compatible endpoints at their own prices. Buyers call one API.<br>
+  <b>ERIS is an exchange for AI inference Build on Elysium.</b><br>
+  Sellers list OpenAI compatible endpoints at their own prices. Buyers call one API.<br>
   Each request is routed to a listed seller, metered by the tokens it used, and settled in USDC.
 </p>
 
