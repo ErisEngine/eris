@@ -4,8 +4,7 @@
 
 <p align="center">
   <a href="https://erislabs.org"><img alt="erislabs.org status" src="https://img.shields.io/website?url=https%3A%2F%2Ferislabs.org&style=flat-square&label=erislabs.org&up_message=online&down_message=offline&labelColor=07060b&color=5fe3f0"></a>
-  <a href="docs/billing.md#the-payment-token"><img alt="Robinhood Chain, chain ID 4663" src="https://img.shields.io/badge/Robinhood%20Chain-4663-8b6cff?style=flat-square&labelColor=07060b"></a>
-  <a href="docs/billing.md"><img alt="Settles in USDG" src="https://img.shields.io/badge/settles%20in-USDG-f2c46d?style=flat-square&labelColor=07060b"></a>
+  <a href="docs/billing.md"><img alt="Settles in USDC" src="https://img.shields.io/badge/settles%20in-USDG-f2c46d?style=flat-square&labelColor=07060b"></a>
   <a href="docs/api.md"><img alt="OpenAI-compatible API" src="https://img.shields.io/badge/API-OpenAI--compatible-eeeaf4?style=flat-square&labelColor=07060b"></a>
   <a href="https://erislabs.org/docs"><img alt="Documentation" src="https://img.shields.io/badge/docs-erislabs.org%2Fdocs-a7a1b6?style=flat-square&labelColor=07060b"></a>
   <a href="https://github.com/ErisEngine/eris/actions/workflows/examples.yml"><img alt="Examples check" src="https://github.com/ErisEngine/eris/actions/workflows/examples.yml/badge.svg"></a>
@@ -15,7 +14,7 @@
 <p align="center">
   <b>ERIS is an exchange for AI inference.</b><br>
   Sellers list OpenAI-compatible endpoints at their own prices. Buyers call one API.<br>
-  Each request is routed to a listed seller, metered by the tokens it used, and settled in USDG.
+  Each request is routed to a listed seller, metered by the tokens it used, and settled in USDC.
 </p>
 
 <p align="center">
@@ -35,7 +34,7 @@ The public home of ERIS's documentation and client examples. The exchange itself
 
 | Folder | Contents |
 |---|---|
-| **[`docs/`](docs)** | How ERIS works: the API, routing, pricing and USDG billing, selling, the security model, architecture. |
+| **[`docs/`](docs)** | How ERIS works: the API, routing, pricing and USDC billing, selling, the security model, architecture. |
 | **[`examples/`](examples)** | Runnable cURL, Python and TypeScript clients, checked in CI. |
 | **[`assets/`](assets)** | The banner and the product screenshots used here. |
 
@@ -46,7 +45,7 @@ The public home of ERIS's documentation and client examples. The exchange itself
 <table>
   <tr>
     <td width="50%" valign="top"><img src="assets/screenshots/home.jpg" alt="The ERIS home page: 'The exchange for inference', beside the iridescent Chromatic Neural Core."></td>
-    <td width="50%" valign="top"><img src="assets/screenshots/marketplace.jpg" alt="The ERIS marketplace: every listed model with its seller, context length, USDG prices per million tokens, request count and median latency."></td>
+    <td width="50%" valign="top"><img src="assets/screenshots/marketplace.jpg" alt="The ERIS marketplace: every listed model with its seller, context length, USDC prices per million tokens, request count and median latency."></td>
   </tr>
   <tr>
     <td valign="top"><b>The exchange.</b> One live WebGL scene, the Chromatic Neural Core, runs behind every page. Each light that crosses it is a real, completed request.</td>
@@ -78,15 +77,15 @@ flowchart TB
     R -. "on failure: the next seller, up to 3" .-> S2["Another seller"]
     R --> H["Hold the worst case, charge tokens used, release the rest"]
     H --> L[("Ledger")]
-    W["Buyer wallet"] -- "USDG deposit" --> T["ERIS treasury<br/>Robinhood Chain"]
-    T -- "USDG withdrawal" --> SW["Seller wallet"]
+    W["Buyer wallet"] -- "USDC deposit" --> T["ERIS treasury<br/>Elysium Chain"]
+    T -- "USDC withdrawal" --> SW["Seller wallet"]
     T -. "reconciled every minute" .- L
 ```
 
 1. **Route.** `seller/model` pins one seller. A bare model id goes to every *verified* seller that lists it, ranked by price, latency or both, with up to three attempts. See [Routing](docs/routing.md).
-2. **Hold.** Before any seller is contacted, ERIS holds the most the request could cost from the buyer's USDG balance. See [Billing](docs/billing.md).
+2. **Hold.** Before any seller is contacted, ERIS holds the most the request could cost from the buyer's USDC balance. See [Billing](docs/billing.md).
 3. **Settle.** The buyer is charged the serving seller's listed price for the tokens it reported; the rest of the hold returns at once. Failed requests cost nothing. Sellers receive 95%.
-4. **Move money on chain.** Deposits arrive as USDG on Robinhood Chain from a wallet the buyer has proven they control; sellers withdraw to theirs. See [Deposits](docs/billing.md#deposits).
+4. **Move money on chain.** Deposits arrive as USDC on Elysium Chain from a wallet the buyer has proven they control; sellers withdraw to theirs. See [Deposits](docs/billing.md#deposits).
 
 The full picture, with a request lifecycle and the settlement loop, is in **[docs/architecture.md](docs/architecture.md)**.
 
